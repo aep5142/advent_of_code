@@ -5,7 +5,7 @@ import csv
 #------------------------------ Day 1 ---------------------------------#
 first_array = np.array([])
 second_array = np.array([])
-with open("input.csv", "r") as file:
+with open("data/input.csv", "r") as file:
     reader = csv.reader(file)
     for row in reader:
         l = row[0]
@@ -33,4 +33,35 @@ computes_similarity_score(first_array, second_array)
 
 #------------------------------ Day 2 ---------------------------------#
 
+data = np.array([])
+with open("data/day_2.csv") as file:
+    reader = csv.reader(file)
+    for row in reader:
+        data = np.append(data, row[0])
+        data = data.reshape(len(data), 1)
+
+MAX_DIFFERENCE = 3
+safe = 0
+print("safe is", safe)
+for i, nums in enumerate(data):
+    nums = np.array(nums[0].split())
+    nums = nums.astype(int)
+    nums_ascending = np.sort(nums)
+    nums_descending = np.sort(nums)[::-1]
+    if np.array_equal(nums, nums_ascending) or np.array_equal(nums, nums_descending):
+        for i, n in enumerate(nums):
+            if i < (len(nums) - 1):
+                dif = abs(n - nums[i + 1])
+                if dif > MAX_DIFFERENCE:
+                    safe += 1
+                    break
+                    
+                    
+print(f"safe is: {safe}")
+
+
+
+
+
+    
 
