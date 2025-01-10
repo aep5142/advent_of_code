@@ -44,10 +44,12 @@ data = np.array(data, dtype=object)
 
 MAX_DIFFERENCE = 3
 MIN_DIFFERENCE = 1
-safe = 0
 
 def is_increasing(arr):
-    return arr[0] < arr[-1]
+    if arr[0] < arr[-1]:
+         return True
+    else:
+         return False
 
 def all_increase(arr):
     for i in range(0, len(arr) - 1):
@@ -61,36 +63,26 @@ def all_decrease(arr):
                 return False
     return True
 
+def difference_is_3(arr):
+    for i in range(0, len(arr) - 1):
+            first = arr[i]
+            second = arr[i+1]
+            difference = abs(second - first)
+            if difference not in range(MIN_DIFFERENCE, MAX_DIFFERENCE + 1):
+                return False
+    return True
+
 def is_safe(arr):
     if is_increasing(arr):
         if all_increase(arr):
-            for i in range(0, len(arr) - 1):
-                first = arr[i]
-                second = arr[i+1]
-                difference = abs(second - first)
-                if difference > MAX_DIFFERENCE:
-                    return False
-    elif not is_increasing(arr):
+             return difference_is_3(arr)       
+    else:
         if all_decrease(arr):
-            for i in range(0, len(arr) - 1):
-                first = arr[i]
-                second = arr[i+1]
-                difference = abs(second - first)
-                if difference > MAX_DIFFERENCE:
-                    return False
-    return True
+             return difference_is_3(arr)
+    
+safe = len(list(filter(is_safe, data)))
 
-
-counter = 0
-l = []
-for d in data:
-    if is_increasing(d) and all_increase(d):
-        l.append(d)
-    elif not is_increasing(d) and all_decrease(d):
-        l.append(d)
-print(len(l))
-
-print(counter)
+print(safe)
 
 
      
